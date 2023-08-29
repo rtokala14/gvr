@@ -12,7 +12,6 @@ import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import Hero2 from '~/components/widgets/Hero2.astro';
 import { getPermalink } from '~/utils/permalinks';
-import Carousel from '~/components/custom/Carousel.astro';
 
 const metadata = {
   title: 'GVR',
@@ -25,10 +24,13 @@ const metadata = {
 
   <Hero2
     title="One stop solution for all your roadways needs"
-    image={{
-      src: '~/assets/images/traffic-1.jpg',
-      alt: 'Traffic Image',
-    }}
+    images={[
+      '~/assets/images/traffic-1.jpg',
+      '~/assets/images/traffic-2.jpg',
+      '~/assets/images/traffic-3.webp',
+      '~/assets/images/traffic-4.jpeg',
+      '~/assets/images/traffic-5.jpeg',
+    ]}
     callToAction={{ text: 'Get in touch', href: getPermalink('/contact') }}
   >
     <Fragment slot="subtitle">
@@ -37,8 +39,6 @@ const metadata = {
        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
       magna aliqua.
     </Fragment>
-
-    <Carousel slot="image" images={['~/assets/images/traffic-1.jpg', '~/assets/images/hero.png']} />
   </Hero2>
 
   <!-- <Hero

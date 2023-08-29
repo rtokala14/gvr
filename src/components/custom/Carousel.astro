@@ -1,25 +1,62 @@
 ---
 import Image from '~/components/common/Image.astro';
 const props = Astro.props;
-
-console.log(props.images);
 ---
 
-<div>
+<div class="relative m-auto max-w-5xl hero-carousel">
   {
-    props.images.map((image) => {
-      return (
-        <Image
-          class="mx-auto rounded-md w-full "
-          widths={[400, 768, 1024, 2040]}
-          sizes="(max-width: 767px) 400px, (max-width: 1023px) 768px, (max-width: 2039px) 1024px, 2040px"
-          loading="eager"
-          width={600}
-          height={600}
-          alt={`Image of ${image.alt}`}
-          {...image}
-        />
-      );
-    })
+    props.images.map((image) => (
+      <Image
+        class="mx-auto rounded-md w-full "
+        widths={[400, 768, 1024, 2040]}
+        sizes="(max-width: 767px) 400px, (max-width: 1023px) 768px, (max-width: 2039px) 1024px, 2040px"
+        loading="eager"
+        width={600}
+        height={600}
+        alt={`Image of ${image.alt}`}
+        src={image}
+      />
+    ))
   }
 </div>
+
+<style>
+  .hero-carousel {
+    --d: 30s;
+    /* duration */
+    display: grid;
+    overflow: hidden;
+  }
+
+  .hero-carousel > img {
+    grid-area: 1/1;
+    width: 100%;
+    object-fit: cover;
+    animation: r var(--d) linear infinite;
+  }
+
+  .hero-carousel > img:nth-child(2) {
+    animation-delay: calc(-0.2 * var(--d));
+  }
+
+  .hero-carousel > img:nth-child(3) {
+    animation-delay: calc(-0.4 * var(--d));
+  }
+
+  .hero-carousel > img:nth-child(4) {
+    animation-delay: calc(-0.6 * var(--d));
+  }
+
+  .hero-carousel > img:nth-child(5) {
+    animation-delay: calc(-0.8 * var(--d));
+  }
+
+  @keyframes r {
+    80% {
+      transform: translate(-400%);
+    }
+    80.01% {
+      transform: translate(100%);
+    }
+  }
+</style>

@@ -1,7 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components';
-import Image from '~/components/common/Image.astro';
 import { CallToAction } from '~/types';
+import Carousel from '../custom/Carousel.astro';
 
 export interface Props {
   title?: string;
@@ -10,7 +10,7 @@ export interface Props {
   content?: string;
   callToAction?: string | CallToAction;
   callToAction2?: string | CallToAction;
-  image?: string | any; // TODO: find HTMLElementProps
+  images?: string[]; // TODO: find HTMLElementProps
 }
 
 const {
@@ -20,7 +20,7 @@ const {
   content = await Astro.slots.render('content'),
   callToAction = await Astro.slots.render('callToAction'),
   callToAction2 = await Astro.slots.render('callToAction2'),
-  image = await Astro.slots.render('image'),
+  images = await Astro.slots.render('images'),
 } = Astro.props;
 ---
 
@@ -57,7 +57,7 @@ const {
                   {typeof callToAction === 'string' ? (
                     <Fragment set:html={callToAction} />
                   ) : (
-                    <a class="btn btn-primary sm:mb-0 w-full" href={callToAction?.href} target="_blank" rel="noopener">
+                    <a class="btn btn-primary sm:mb-0 w-full" href={callToAction?.href}>
                       {callToAction?.icon && (
                         <>
                           <Icon name={callToAction.icon} class="w-5 h-5 mr-1 -ml-1.5 rtl:-mr-1.5 rtl:ml-1" />{' '}
@@ -92,25 +92,7 @@ const {
         {content && <Fragment set:html={content} />}
       </div>
       <div class="basis-1/2">
-        {
-          image && (
-            <div class="relative m-auto max-w-5xl">
-              {typeof image === 'string' ? (
-                <Fragment set:html={image} />
-              ) : (
-                <Image
-                  class="mx-auto rounded-md w-full "
-                  widths={[400, 768, 1024, 2040]}
-                  sizes="(max-width: 767px) 400px, (max-width: 1023px) 768px, (max-width: 2039px) 1024px, 2040px"
-                  loading="eager"
-                  width={600}
-                  height={600}
-                  {...image}
-                />
-              )}
-            </div>
-          )
-        }
+        {images && <Carousel images={images} />}
       </div>
     </div>
   </div>
